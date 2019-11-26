@@ -1,41 +1,96 @@
-public class Location {
-	public int row, column;
-	public double maxValue;
-}
-
+import java.util.ArrayList;
 import java.util.Scanner;
-public class TestLocation {
+public class Addition
+{
+    public static void main(String [] args)
+    {
+        Scanner input = new Scanner(System.in);
+        int number1 = (int)(Math.random() * 9 + 1);
+        int number2 = (int)(Math.random() * 9 + 1);
+        System.out.print("What is " + number1 + " + " + number2 + "? ");
+        int answer = input.nextInt();
+        ArrayList<Integer> answerList = new ArrayList<>();
+        while (answer != (number1 + number2))
+        {
+            if (answerList.contains(answer))
+            {
+                System.out.println("You already enter " + answer);
+            }
+            else
+                answerList.add(answer);
+
+            System.out.print("Wrong answer. Try again. What is " +
+                number1 + " + " + number2 + "? "); 
+            answer = input.nextInt();}
+        System.out.println("You got it.");
+    }
+}
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class CompleteSquare
+{
+    public static void main(String[] args)
+    {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter an integer m: ");
+        int m = input.nextInt();
+        int n = findN(m);
+        System.out.println("The smallest number n for m * n to be a perfect sqare is " + n);
+        System.out.println("m * n is " + (m * n));
+    }
+    public static int findN(int m) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int temp = m;
+        while (temp != 1){
+            for (int i = 2; i <= temp; i++){
+                if (temp % i == 0){
+                    temp /= i;
+                    list.add(i);
+                    break;
+                }}}
+        int max = Collections.max(list);
+        int[] count = new int[max + 1];
+        for (int number : list){
+            count[number]++;
+        }
+        int n = 1;
+        for (int i = 0; i < max + 1; i++){
+            if (count[i] % 2 == 1){
+                n *= i;}}
+        return n;
+    }
+}
+import java.util.Scanner;
+public class CrossPoint {
 	public static void main(String[] args){
 		Scanner input = new Scanner(System.in);
-		System.out.println("Enter the number of rows in the array:");
-		int row = input.nextInt();
-		System.out.println("Enter the number of columns in the array:");
-		int column = input.nextInt();
-		
-		double[][] array = new double[row][column];
-		
-		for(int i = 0; i < array.length; i++){
-			for(int j = 0; j < array[1].length; j++){
-				System.out.println("Enter the value of array(" + i + ", " + j);
-				array[i][j] = input.nextDouble();
-				}
-		}
+		System.out.println("Enter x1:");
+		double x1 = input.nextDouble();
+		System.out.println("Enter y1:");
+		double y1 = input.nextDouble();
+		System.out.println("Enter x2:");
+		double x2 = input.nextDouble();
+		System.out.println("Enter y2:");
+		double y2 = input.nextDouble();
+		System.out.println("Enter x3:");
+		double x3 = input.nextDouble();
+		System.out.println("Enter y3:");
+		double y3 = input.nextDouble();
+		System.out.println("Enter x4:");
+		double x4 = input.nextDouble();
+		System.out.println("Enter y4:");
+		double y4 = input.nextDouble();
 		input.close();
-		Location resultLocation = locateLargest(array);
-		System.out.println("The location of the largest element is " + resultLocation.maxValue +
-							" at (" + resultLocation.row + ", " + resultLocation.column + ")");}
-	
- 
-	public static Location locateLargest(double[][] a){
-		Location location = new Location();
-		location.maxValue = a[0][0];
-		location.row = 0;
-		location.column = 0;
-		for(int row = 0; row < a.length; row++){
-			for(int column = 0; column < a[1].length; column++){
-				if(location.maxValue < a[row][column])
-				{
-					location.maxValue = a[row][column];
-					location.row = row;
-					location.column = column;}}}
-		return location;}}
+		LinearEquation linearEquation = new LinearEquation(y1 - y2, -(x1 - x2), y3 - y4, -(x3 - x4),
+								   (y1 - y2) * x1 - (x1 - x2) * y1,
+								   (y3 - y4) * x3 - (x3 - x4) * y3);
+		if(linearEquation.isSolveable())
+			System.out.println("cross point x is " + linearEquation.getX() + 
+							   "cross point y is " + linearEquation.getY());
+		else
+			System.out.println("Have no cross point.");
+	}
+}
